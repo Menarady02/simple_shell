@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "myshell.h"
 
 /**
  * my_memset - fills memory with a constant byte
@@ -38,7 +38,8 @@ void my_ffree(char **my_pp)
  * @my_new_size: byte size of new block
  * Return: pointer to da ol'block nameen.
  */
-void *my_realloc(void *my_ptr, unsigned int my_old_size, unsigned int my_new_size)
+void *my_realloc(void *my_ptr, unsigned int my_old_size,
+		unsigned int my_new_size)
 {
 	char *my_p;
 

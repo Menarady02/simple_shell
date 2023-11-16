@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "myshell.h"
 
 /**
  * my_history - displays the history list, one command by line, preceded
@@ -9,7 +9,7 @@
  */
 int my_history(info_t *info)
 {
-	print_list(info->history);
+	my_print_list(info->my_history);
 	return (0);
 }
 
@@ -25,13 +25,14 @@ int my_unset_alias(info_t *info, char *str)
 	char *p, c;
 	int ret;
 
-	p = _strchr(str, '=');
+	p = strchr(str, '=');
 	if (!p)
 		return (1);
 	c = *p;
 	*p = 0;
-	ret = delete_node_at_index(&(info->alias),
-		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+	ret = my_delete_node_at_index(&(info->my_alias),
+my_get_node_index(info->my_alias,
+	my_node_starts_with(info->my_alias, str, -1)));
 	*p = c;
 	return (ret);
 }
@@ -47,14 +48,14 @@ int my_set_alias(info_t *info, char *str)
 {
 	char *p;
 
-	p = _strchr(str, '=');
+	p = strchr(str, '=');
 	if (!p)
 		return (1);
 	if (!*++p)
 		return (my_unset_alias(info, str));
 
 	my_unset_alias(info, str);
-	return (add_node_end(&(info->alias), str, 0) == NULL);
+	return (my_add_node_end(&(info->my_alias), str, 0) == NULL);
 }
 
 /**
@@ -69,12 +70,12 @@ int my_print_alias(list_t *node)
 
 	if (node)
 	{
-		p = _strchr(node->str, '=');
+		p = strchr(node->str, '=');
 		for (a = node->str; a <= p; a++)
-			_putchar(*a);
-		_putchar('\'');
-		_puts(p + 1);
-		_puts("'\n");
+			putchar(*a);
+		putchar('\'');
+		puts(p + 1);
+		puts("'\n");
 		return (0);
 	}
 	return (1);
@@ -92,9 +93,9 @@ int my_alias(info_t *info)
 	char *p = NULL;
 	list_t *node = NULL;
 
-	if (info->argc == 1)
+	if (info->my_argc == 1)
 	{
-		node = info->alias;
+		node = info->my_alias;
 		while (node)
 		{
 			my_print_alias(node);
@@ -102,13 +103,13 @@ int my_alias(info_t *info)
 		}
 		return (0);
 	}
-	for (i = 1; info->argv[i]; i++)
+	for (i = 1; info->my_argv[i]; i++)
 	{
-		p = _strchr(info->argv[i], '=');
+		p = strchr(info->my_argv[i], '=');
 		if (p)
-			my_set_alias(info, info->argv[i]);
+			my_set_alias(info, info->my_argv[i]);
 		else
-			my_print_alias(node_starts_with(info->alias, info->argv[i], '='));
+			my_print_alias(my_node_starts_with(info->my_alias, info->my_argv[i], '='));
 	}
 
 	return (0);

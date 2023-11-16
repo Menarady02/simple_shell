@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "myshell.h"
 
 /**
  * **my_strtow - splits a string into words. Repeat delimiters are ignored
@@ -17,7 +17,8 @@ char **my_strtow(char *my_str, char *my_d)
 	if (!my_d)
 		my_d = "\t";
 	for (my_i = 0; my_str[my_i] != '\0'; my_i++)
-		if (!my_is_delim(my_str[my_i], my_d) && (my_is_delim(my_str[my_i + 1], my_d) || !my_str[my_i + 1]))
+		if (!my_is_delim(my_str[my_i], my_d) &&
+				(my_is_delim(my_str[my_i + 1], my_d) || !my_str[my_i + 1]))
 			my_numwords++;
 
 	if (my_numwords == 0)
@@ -75,7 +76,8 @@ char **my_strtow2(char *my_str, char my_d)
 		while (my_str[my_i] == my_d && my_str[my_i] != my_d)
 			my_i++;
 		my_k = 0;
-		while (my_str[my_i + my_k] != my_d && my_str[my_i + my_k] && my_str[my_i + my_k] != my_d)
+		while (my_str[my_i + my_k] != my_d && my_str[my_i + my_k]
+				&& my_str[my_i + my_k] != my_d)
 			my_k++;
 		my_s[my_j] = malloc((my_k + 1) * sizeof(char));
 		if (!my_s[my_j])

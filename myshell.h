@@ -83,7 +83,7 @@ typedef struct passinfo
 	char *my_fname;
 	list_t *my_env;
 	list_t *my_history;
-	list_t *my_alias;
+	list_t my_alias;
 	char **my_environ;
 	int my_env_changed;
 	int my_status;
